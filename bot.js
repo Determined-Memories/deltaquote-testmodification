@@ -13,14 +13,7 @@ const fs = require('fs');
 const { execFileSync, exec } = require('child_process');
 const path = require('path');
 const { createCanvas, loadImage } = require('canvas');
-
-try {
-    const Secrets = require('./secrets.json');
-}
-catch (err) {
-    console.error('Error loading secrets.json');
-    process.exit(1);
-}
+const Secrets = JSON.parse(fs.readFileSync(path.join(__dirname, 'secrets.json'), 'utf-8'));
 
 function sanitizeText(text) {
     var prohibitedChars = ['#', '*', '_', '~', '`', '|', '\\', '\n', '\r', '"'];
