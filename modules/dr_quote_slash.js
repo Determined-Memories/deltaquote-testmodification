@@ -18,7 +18,7 @@ try {
 
             var randomFilename = require('crypto').randomBytes(16).toString('hex');
 
-            var userMsgAuthor = repliedTo.author;
+            var userMsgAuthor = interaction.author;
             var userPFP = userMsgAuthor.displayAvatarURL({ format: 'png', size: 512 });
             var imageBuffer = await dlImage(userPFP.replace('.webp', '.png'));
 
