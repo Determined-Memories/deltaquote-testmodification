@@ -87,7 +87,7 @@ try {
     })();
 }
 catch(e) {
-    await interaction.reply({
+    interaction.reply({
         content: '**An error occurred.** Please try again later.',
         ephemeral: true
     });
