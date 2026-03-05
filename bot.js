@@ -129,10 +129,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
     var interactionId = maps[interaction.commandName];
 
-    const repliedTo = interaction.targetMessage || "null";
+    const repliedTo = interaction.targetMessage;
 
     var module = fs.readFileSync(path.join(__dirname, 'modules', `${interactionId == 'dr_quote_light' ? 'dr_quote' : interactionId}.js`), 'utf-8');
-    eval(module); // yes i know eval is bad i promise i will require the module properly in the future
+    (async () => { eval(module); })(); // yes i know eval is bad i promise i will require the module properly in the future
 });
 
 client.login(Secrets.token);
