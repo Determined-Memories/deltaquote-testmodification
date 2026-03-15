@@ -13,7 +13,7 @@ function sanitizeText(text) {
     return sanitized;
 }
 
-async function makeBox(pfpBuffer, messageText) {
+async function makeBox(pfpBuffer, messageText, lightBox = false) {
     try {
         let filtcont = sanitizeText(messageText);
 
@@ -78,7 +78,7 @@ async function makeBox(pfpBuffer, messageText) {
             `-boxheight "a" ` +
             `-text "* ${filtcont}" ` +
             `${characterOverride} ` +
-            `-darkbox -quit`;
+            `${!lightBox ? '-darkbox' : ''} -quit`;
 
         await new Promise((resolve, reject) => {
             exec(command, (error) => {

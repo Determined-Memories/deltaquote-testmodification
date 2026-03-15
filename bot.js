@@ -128,7 +128,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     var imageBuffer = await dlImage(userPFP.replace('.webp', '.png'));
     var circularImageBuffer = await makeCircularImage(imageBuffer, 256);
 
-    var box = await require('./box')(circularImageBuffer, repliedTo.content).catch(e => e);
+    var box = await require('./box')(circularImageBuffer, repliedTo.content, interactionId == 'dr_quote_light').catch(e => e);
 
     if (box instanceof Error) {
         await interaction.reply({
