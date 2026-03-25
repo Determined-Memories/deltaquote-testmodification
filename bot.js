@@ -49,24 +49,6 @@ client.once(Events.ClientReady, async () => {
             .setType(ApplicationCommandType.Message)
             .setIntegrationTypes([0, 1])
             .setContexts([0, 1, 2])
-            .toJSON(),
-        new ContextMenuCommandBuilder()
-            .setName('Message in Heart Locket')
-            .setType(ApplicationCommandType.Message)
-            .setIntegrationTypes([0, 1])
-            .setContexts([0, 1, 2])
-            .toJSON(),
-        new ContextMenuCommandBuilder()
-            .setName('User as a Flag')
-            .setType(ApplicationCommandType.User)
-            .setIntegrationTypes([0, 1])
-            .setContexts([0, 1, 2])
-            .toJSON(),
-        new ContextMenuCommandBuilder()
-            .setName('Message on Billboard')
-            .setType(ApplicationCommandType.Message)
-            .setIntegrationTypes([0, 1])
-            .setContexts([0, 1, 2])
             .toJSON()
     ];
 
@@ -130,58 +112,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
             });
 
             break;
-        case 'Message in Heart Locket':
-            const msg = interaction.targetMessage;
-            var userPFP = msg.author.displayAvatarURL({ format: 'png', size: 512 });
-            var imageBuffer = await dlImage(userPFP.replace('.webp', '.png'));
-
-            await interaction.deferReply();
-
-            var gifBuffer = await require('./modules/heart_locket')(imageBuffer, msg.content);
-                
-            await interaction.editReply({
-                files: [{
-                    attachment: gifBuffer,
-                    name: 'heart-locket.gif'
-                }],
-                content: '',
-            });
-
-            break;
-        case 'User as a Flag':
-            const user = interaction.targetUser;
-            var userPFP = user.displayAvatarURL({ format: 'png', size: 512 });
-            var imageBuffer = await dlImage(userPFP.replace('.webp', '.png'));
-
-            await interaction.deferReply();
-
-            var gifBuffer = await require('./modules/user_flag')(imageBuffer);
-
-            await interaction.editReply({
-                files: [{
-                    attachment: gifBuffer,
-                    name: 'flag.gif'
-                }],
-                content: '',
-            });
-
-            break;
-        case 'Message on Billboard':
-            const billboardMsg = interaction.targetMessage;
-            var userPFP = billboardMsg.author.displayAvatarURL({ format: 'png', size: 512 });
-            var imageBuffer = await dlImage(userPFP.replace('.webp', '.png'));
-
-            await interaction.deferReply();
-
-            var gifBuffer = await require('./modules/billboard')(imageBuffer, billboardMsg.content);
-
-            await interaction.editReply({
-                files: [{
-                    attachment: gifBuffer,
-                    name: 'billboard.gif'
-                }],
-                content: '',
-            });
     }
 
     partialLog(greenText(' | Done\n'));
