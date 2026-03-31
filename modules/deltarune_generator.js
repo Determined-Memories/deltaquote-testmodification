@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const { exec } = require('child_process');
 
 function sanitizeText(text) {
-    var prohibitedChars = ['#', '*', '_', '~', '`', '|', '\n', '\r', '"'];
+    var prohibitedChars = ['#', '\n', '\r'];
     var sanitized = text;
     prohibitedChars.forEach(char => {
         var regex = new RegExp(`\\${char}`, 'g');
@@ -71,7 +71,7 @@ async function makeBox(pfpBuffer, messageText, lightBox = false) {
             `"${path.join(__dirname, '../', 'exepacks', 'boxgenerator', 'box.exe')}" ` +
             `-generate ${randomFilename} ` +
             `-boxheight "a" ` +
-            `-text "* ${filtcont}" ` +
+            `-text_base64 "* ${btoa(filtcont)}" ` +
             `${characterOverride} ` +
             `${!lightBox ? '-darkbox' : ''} -quit`;
 
