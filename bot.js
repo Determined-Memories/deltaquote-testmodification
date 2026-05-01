@@ -38,6 +38,16 @@ client.once(Events.ClientReady, async () => {
     process.stdout.write('Deltaquote ' + require('./package.json').version + '\nProgrammed by GhinoRhino\n\n' + '-'.repeat(process.stdout.columns) + '\n\n');
     partialLog(yellowText('Starting Deltaquote...'));
 
+    try {
+        client.user.setPresence({
+        status: 'dnd',
+        activities: [{ name: 'Shutting down on May 10th.' }]
+    });
+    }
+    catch (e) {
+        partialLog(redText('Failed to set presence. This is likely due to an invalid token. Please check your secrets.json file.\n'));
+    }
+
     const commands = [
         new ContextMenuCommandBuilder()
             .setName('Message as a DELTARUNE dialogue')
@@ -64,6 +74,8 @@ client.once(Events.ClientReady, async () => {
     if (!fs.existsSync(path.join(__dirname, 'temp'))) {
         fs.mkdirSync(path.join(__dirname, 'temp'));
     }
+
+    
 });
 
 function greenText(str) {
