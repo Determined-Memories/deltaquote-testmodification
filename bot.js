@@ -14,7 +14,10 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const Secrets = JSON.parse(fs.readFileSync(path.join(__dirname, 'secrets.json'), 'utf-8'));
+const Secrets = {
+    clientId: process.env.CLIENT_ID,
+    token: process.env.TOKEN
+}
 
 const { joinImages, padImage, makeCircularImage, textRender } = require('./modules/image_utils');
 const { execSync } = require('child_process');
@@ -124,7 +127,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
                 embeds: [
                     new EmbedBuilder()
                         .setTitle('Discontinuation')
-                        .setDescription('_Thank you for using Deltaquote over the past time._ Due to hosting problems, Deltaquote will **permanently shut down** on May 10th 2026.')
+                        .setDescription('_Thank you for using Deltaquote over the past 2 months._\nDue to hosting problems, and the problems the owner is encountering with continuing to host Deltaquote, the bot will **permanently shut down** on May 10th 2026.\n\n_If you wish to continue hosting it yourself, the source code is available on [GitHub](https://github.com/ghinorhino/deltaquote)_')
                         .setColor(0xff5555)
                 ],
                 content: ''
