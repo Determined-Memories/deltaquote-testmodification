@@ -4,8 +4,8 @@ const crypto = require('crypto');
 const { exec } = require('child_process');
 
 function sanitizeText(text) {
-    var prohibitedChars = ['#', '*', '\r', '"'];
-    var replacements = ["\\#", null, null, "“"] // “ is a Replacement Memories Added to TEXTBOX_PROGRAM so people can use '"'
+    var prohibitedChars = ['#', '*', '\r', '"', "&"];
+    var replacements = ["\\#", null, null, "“", "\\&"] // “ is a Replacement Memories Added to TEXTBOX_PROGRAM so people can use '"'
     var sanitized = text;
     prohibitedChars.forEach((char, index) => {
         var regex = new RegExp(`\\${char}`, 'g');
