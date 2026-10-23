@@ -7,13 +7,17 @@ const {
     ContextMenuCommandBuilder,
     MessageFlags,
     SlashCommandBuilder,
-    ApplicationCommandType
+    ApplicationCommandType,
+    EmbedBuilder
 } = require('discord.js');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const Secrets = JSON.parse(fs.readFileSync(path.join(__dirname, 'secrets.json'), 'utf-8'));
+const Secrets = {
+    clientId: process.env.CLIENT_ID,
+    token: process.env.TOKEN
+}
 
 const { joinImages, padImage, makeCircularImage, textRender } = require('./modules/image_utils');
 const { execSync } = require('child_process');
@@ -36,6 +40,16 @@ client.once(Events.ClientReady, async () => {
     console.clear();
     process.stdout.write('Deltaquote ' + require('./package.json').version + '\nProgrammed by GhinoRhino\n\n' + '-'.repeat(process.stdout.columns) + '\n\n');
     partialLog(yellowText('Starting Deltaquote...'));
+
+    try {
+        client.user.setPresence({
+        status: 'dnd',
+        activities: [{ name: 'Shutting down on May 10th.' }]
+    });
+    }
+    catch (e) {
+        partialLog(redText('Failed to set presence. This is likely due to an invalid token. Please check your secrets.json file.\n'));
+    }
 
     const commands = [
         new ContextMenuCommandBuilder()
@@ -63,6 +77,8 @@ client.once(Events.ClientReady, async () => {
     if (!fs.existsSync(path.join(__dirname, 'temp'))) {
         fs.mkdirSync(path.join(__dirname, 'temp'));
     }
+
+    
 });
 
 function greenText(str) {
@@ -108,9 +124,14 @@ client.on(Events.InteractionCreate, async (interaction) => {
                     attachment: await padImage(box, 15),
                     name: 'quote.png'
                 }],
-                content: '',
+                embeds: [
+                    new EmbedBuilder()
+                        .setTitle('Discontinuation')
+                        .setDescription('_Thank you for using Deltaquote over the past 2 months._\nDue to hosting problems, and the problems the owner is encountering with continuing to host Deltaquote, the bot will **permanently shut down** on May 10th 2026.\n\n_If you wish to continue hosting it yourself, the source code is available on [GitHub](https://github.com/ghinorhino/deltaquote)_')
+                        .setColor(0xff5555)
+                ],
+                content: ''
             });
-
             break;
     }
 
